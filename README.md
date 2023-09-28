@@ -1,44 +1,61 @@
-# React Candid
+# react-actor
 
-React Candid is a library that provides a hook for calling functions defined in a Candid file. It consists of three packages:
-
-- `candid-utils`: A package that provides utility functions for working with Candid files.
-- `use-candid`: A package that provides the `useCandid` hook for calling functions defined in a Candid file.
-- `react-candid`: A package that exports the `useCandid` hook and other public modules.
+This library provides a simple interface for interacting with a canister using the `zustand` library and strong types generated from the canister's Candid file.
 
 ## Installation
 
-To install React Candid, run the following command:
-
 ```
-npm install react-candid
+npm install react-actor
 ```
 
 ## Usage
 
-To use the `useCandid` hook, import it from the `react-candid` package and call it with the Candid file and the function name as arguments. For example:
+### `useActor`
 
-```jsx
-import { useCandid } from 'react-candid';
+The `useActor` hook is used to interact with the canister. It returns an object with methods corresponding to the canister's methods.
 
-function MyComponent() {
-  const myFunction = useCandid('myFile.did', 'myFunction');
-  // Call myFunction with arguments
-  return <div>{/* ... */}</div>;
+```typescript
+import { useActor } from "react-actor"
+
+const { anonymous_user } = useActor()
+const userData = await anonymous_user([1, 2, 3])
+```
+
+### `Actor` type
+
+The `Actor` type is used to define the actor interface. It is generated from the canister's Candid file.
+
+```typescript
+import type { Actor } from "react-actor"
+
+const actor: Actor = {
+  anonymous_user: async (arg: [number[]]) => {
+    // ...
+  },
+  // ...
+}
+```
+
+### Types
+
+The types used in the canister interface are exported from `types.ts`. They are generated from the canister's Candid file.
+
+```typescript
+import type { AnonymousUserData } from "react-actor"
+
+const userData: AnonymousUserData = {
+  texts: [1n, 2n, 3n],
+  created_at: 123n,
+  decryption_key: [],
 }
 ```
 
 ## Contributing
 
-If you want to contribute to React Candid, please follow these steps:
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-1. Fork the repository and clone it to your local machine.
-2. Install the dependencies by running `npm install` in the root directory.
-3. Make your changes and write tests for them.
-4. Run the tests by running `npm test` in the root directory.
-5. Commit your changes and push them to your fork.
-6. Create a pull request to the `main` branch of the original repository.
+Please make sure to update tests as appropriate.
 
 ## License
 
-React Candid is licensed under the MIT License. See the LICENSE file for more information.
+[MIT](https://choosealicense.com/licenses/mit/)

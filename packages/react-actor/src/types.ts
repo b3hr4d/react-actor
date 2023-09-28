@@ -1,38 +1,39 @@
-import { ActorSubclass } from "@dfinity/agent"
+import { ActorMethod, ActorSubclass } from "@dfinity/agent"
 
-// Define a generic ActorType
-export type ActorType<S> = ActorSubclass<S>
+export type ExtractActorMethodArgs<T> = T extends ActorMethod<infer A>
+  ? A
+  : never
+export type ExtractReturnType<T> = T extends ActorMethod<any, infer R>
+  ? R
+  : never
 
-// Define ActorMethod for a given ActorType
-export type ActorMethod<A extends ActorType<any>> = keyof A
-
-// Define ICState for a given ActorType
-export interface ICState<A extends ActorType<any>> {
+// Your existing types remain the same
+export interface ICState<A extends ActorSubclass<any>> {
   actor: A | null
   data: any | null
   loading: boolean
   error: Error | null
 }
 
-// Define ICStateUpdate
 export interface ICStateUpdate {
   data?: any
   loading?: boolean
   error?: Error
 }
 
-// Define ICStore for a given ActorType
-export type ICStore<A extends ActorType<any>> = {
-  (): ICState<A>
-  subscribe: (subscription: (state: ICState<A>) => void) => () => void
-  getState: () => ICState<A>
-  setState: (newState: ICState<A> | ((state: ICState<A>) => ICState<A>)) => void
+export type ICStore<A extends ActorSubclass<any>> = {
+  actor: A | null
+  data: any | null
+  loading: boolean
+  error: Error | null
 }
 
-// Define ICActions for a given ActorType and ActorMethod
-export interface ICActions<A extends ActorType<any>, M extends ActorMethod<A>> {
+// Adapt the ICActions to use Dfinity's ActorMethod
+export interface ICActions<A extends ActorSubclass<any>> {
   startActivation: () => () => void
-  update: (stateUpdate: ICStateUpdate) => void
   resetState: () => void
-  callActorMethod: (method: M, ...args: any[]) => void
+  callActorMethod: <M extends keyof A>(
+    method: M,
+    ...args: ExtractActorMethodArgs<A[M]>
+  ) => Promise<ExtractReturnType<A[M]>>
 }
