@@ -1,0 +1,20 @@
+{
+  "name": "react-candid",
+  "version": "1.0.0",
+  "description": "A React library for working with Candid files",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "lerna run build",
+    "test": "lerna run test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "lerna": "^7.3.0",
+    "typescript": "^5.2.2"
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

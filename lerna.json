@@ -1,0 +1,15 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "npmClient": "npm",
+  "useWorkspaces": true,
+  "command": {
+    "test": {
+      "parallel": true,
+      "npmClient": "npm",
+      "script": "test"
+    }
+  }
+}
