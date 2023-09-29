@@ -1,9 +1,9 @@
 import { ActorSubclass } from "@dfinity/agent" // Import from Dfinity
-import { StoreApi, createStore } from "zustand"
+import { createStore } from "zustand"
 
 export function createICStoreAndActions<A extends ActorSubclass>(
   actorInitializer: () => A
-): [StoreApi<ICStore<A>>, ICActions<A>] {
+) {
   // Use keyof A for ActorMethod
   const actor = actorInitializer() // Initialize the actor here
 
@@ -48,42 +48,24 @@ export function createICStoreAndActions<A extends ActorSubclass>(
       })
   }
 
-  return [store, { startActivation, resetState, callActorMethod }]
+  return [store, { startActivation, resetState, callActorMethod }] as const
 }
 
 // Create store and actions
 
-import { backend, createActor } from "./candid"
-import {
-  ExtractActorMethodArgs,
-  ExtractReturnType,
-  ICActions,
-  ICStore,
-} from "./types"
+import { createActor } from "./candid"
+import { ExtractActorMethodArgs, ExtractReturnType } from "./types"
 
 // Example actor type
-type MyActor = typeof backend
+
+type MyActor = ReturnType<typeof createActor>
 
 const [myStore, myActions] = createICStoreAndActions<MyActor>(() =>
   createActor("http://localhost:8000")
 )
+
 const cancelActivation = myActions.startActivation()
+
 let key = myActions.callActorMethod("anonymous_user", [])
+
 cancelActivation()
-
-const testFunc = <K extends keyof MyActor>(
-  method: K,
-  args: ExtractActorMethodArgs<MyActor[K]>
-): Promise<ExtractReturnType<MyActor[K]>> => {
-  return (
-    backend[method] as unknown as (
-      args: ExtractActorMethodArgs<MyActor[K]>
-    ) => Promise<ExtractReturnType<MyActor[K]>>
-  )(args)
-}
-
-let data = testFunc("anonymous_user", [Uint8Array.from([])])
-
-data.then((result) => {
-  console.log(result.created_at)
-})
