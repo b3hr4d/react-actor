@@ -41,6 +41,8 @@ export type CallActorMethodType<A extends ActorSubclass<unknown>> = <
   ...args: ExtractActorMethodArgs<A[M]>
 ) => Promise<ExtractActorMethodReturnType<A[M]>>
 
+export type UseSelectorType = (fn: (state: ICState) => any) => any
+
 // Adapt the ICActions to use Dfinity's ActorMethod
 export interface ICActions<A extends ActorSubclass<unknown>> {
   startActivation: () => () => void

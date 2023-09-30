@@ -1,12 +1,18 @@
 import { ActorSubclass } from "@dfinity/agent" // Import from Dfinity
 import { create, useStore } from "zustand"
-import { CallActorMethodType, ExtractActorServiceType, ICState } from "./types"
+import {
+  CallActorMethodType,
+  ExtractActorServiceType,
+  ICState,
+  UseSelectorType,
+} from "./types"
 
-function createICStoreAndActions<T extends () => ActorSubclass<any>>(
-  actorInitializer: T
-) {
-  type ServiceType = ExtractActorServiceType<ReturnType<T>>
-  let actor: ServiceType
+const createICStoreAndActions = (actorInitializer: ActorSubclass<any>) => {
+  type ServiceType = ExtractActorServiceType<
+    ReturnType<typeof actorInitializer>
+  >
+
+  let actor: ServiceType | null = null
 
   const DEFAULT_STATE: ICState = {
     data: null,
@@ -18,13 +24,13 @@ function createICStoreAndActions<T extends () => ActorSubclass<any>>(
 
   const store = create(() => DEFAULT_STATE)
 
-  function startActivation(): () => void {
+  const startActivation = () => {
     store.setState({ initializing: true })
 
     try {
       actor = actorInitializer()
 
-      update({ initialized: true })
+      update({ initialized: true, initializing: false })
     } catch (error) {
       console.error("Error in initializeActor:", error)
 
@@ -32,15 +38,16 @@ function createICStoreAndActions<T extends () => ActorSubclass<any>>(
     }
 
     return () => {
-      store.setState({ initializing: false })
+      actor = null
+      resetState()
     }
   }
 
-  function resetState(): void {
+  const resetState = () => {
     store.setState(DEFAULT_STATE)
   }
 
-  function update(newState: Partial<typeof DEFAULT_STATE>): void {
+  const update = (newState: Partial<ICState>) => {
     store.setState((state) => ({
       ...state,
       ...newState,
@@ -67,10 +74,8 @@ function createICStoreAndActions<T extends () => ActorSubclass<any>>(
     }
   }
 
-  const useSelector = <K extends keyof typeof DEFAULT_STATE>(
-    key: K
-  ): (typeof DEFAULT_STATE)[K] => {
-    return useStore(store, (state) => state[key])
+  const useSelector: UseSelectorType = (fn) => {
+    return useStore(store, fn)
   }
 
   return [

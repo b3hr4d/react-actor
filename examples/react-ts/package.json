@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react-actor": "file:../../packages/react-actor/dist",
+    "react-actor": "file:../../packages/core/dist",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.2.2",

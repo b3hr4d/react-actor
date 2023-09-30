@@ -59,7 +59,6 @@ const mapState = (state: RootState) => ({
   errorState: state.error,
   loadingState: state.loading,
   data: state.data,
-  actor: state.actor,
 })
 
 const mapDispatch = () => ({

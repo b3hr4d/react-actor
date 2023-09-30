@@ -18,4 +18,4 @@ const useBearStore = create<BearState>()(
   )
 )
 
-useBearStore((state) => state.bears) // $ExpectType number
+useBearStore((state) => state.bears)

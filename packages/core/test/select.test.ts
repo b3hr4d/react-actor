@@ -1,10 +1,20 @@
 import createICStoreAndActions from "../src"
-import { createActor } from "./candid"
-jest.mock("./candid")
+
+const createMockActorInitializer = () => {
+  return {
+    timers: () => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve("Hello")
+        }, 1000)
+      })
+    },
+  }
+}
 
 // Mocked actorInitializer function for testing
 function mockActorInitializer() {
-  return createActor("canisterId")
+  return createMockActorInitializer()
 }
 
 describe("createICStoreAndActions", () => {
@@ -21,21 +31,23 @@ describe("createICStoreAndActions", () => {
   it("should start activation and initialize actor", () => {
     const [store, actions] = createICStoreAndActions(mockActorInitializer)
     const cancelActivation = actions.startActivation()
-    const state = store.getState()
-    expect(state.initializing).toBe(true)
     cancelActivation() // Simulate cancellation
     const updatedState = store.getState()
-    expect(updatedState.initialized).toBe(true)
+    expect(updatedState.initialized).toBe(false)
     expect(updatedState.initializing).toBe(false)
 
-    // Check that the actor is initialized
-    expect(actions.callActorMethod("timers")).toBeDefined()
+    // Check that the actor is not initialized
+    expect(actions.callActorMethod("timers")).rejects.toThrow(
+      "Actor not initialized"
+    )
+
+    actions.startActivation()
 
     // Check that the actor works as expected
     expect(actions.callActorMethod("timers")).resolves.toBe("Hello")
 
     // Check that the actor works as expected
-    expect(actions.callActorMethod("timers")).resolves.toBe("Hello")
+    expect(actions.useSelector((state) => state.data)).toBe("Hello")
   })
 
   it("should reset state to default", () => {

@@ -11081,7 +11081,7 @@ raw-body@2.5.1:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-"react-actor@file:packages/react-actor/dist":
+"react-actor@file:packages/core/dist":
   version "0.0.0"
 
 react-app-polyfill@^3.0.0:

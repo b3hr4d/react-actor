@@ -2,9 +2,9 @@ import { useEffect } from "react"
 import { startActivation, useSelector } from "./store"
 
 const Count = () => {
-  const data = useSelector("data")
-  const loadingState = useSelector("loading")
-  const errorState = useSelector("error")
+  const data = useSelector((state) => state.data)
+  const loadingState = useSelector((state) => state.loading)
+  const errorState = useSelector((state) => state.error)
   // const dispatch = useDispatch()
   console.log("data", data)
   console.log("loadingState", loadingState)
