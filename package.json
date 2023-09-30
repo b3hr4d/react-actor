@@ -1,8 +1,7 @@
 {
-  "name": "react-candid",
+  "name": "react-actor",
   "version": "1.0.0",
   "description": "A React library for working with Candid files",
-  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
@@ -11,10 +10,13 @@
   "dependencies": {},
   "devDependencies": {
     "lerna": "^7.3.0",
-    "typescript": "^5.2.2"
+    "dts-cli": "^2.0.3",
+    "typescript": "^5.2.2",
+    "@types/jest": "^29.5.5"
   },
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ]
 }

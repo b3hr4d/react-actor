@@ -1,0 +1,52 @@
+{
+  "name": "@react-actor/core",
+  "version": "1.0.0",
+  "description": "A React library for interacting with Dfinity actors",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b3hr4d/react-actor.git"
+  },
+  "keywords": [
+    "actor",
+    "react",
+    "candid",
+    "dfinity",
+    "web3",
+    "dapp"
+  ],
+  "author": "b3hr4d",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/b3hr4d/react-actor/issues"
+  },
+  "homepage": "https://github.com/b3hr4d/react-actor#readme",
+  "peerDependencies": {
+    "zustand": ">= 4",
+    "@dfinity/agent": ">= 0.19",
+    "@dfinity/candid": ">= 0.19",
+    "@dfinity/principal": ">= 0.19"
+  },
+  "dependencies": {
+    "@dfinity/agent": "^0.19.3",
+    "@dfinity/candid": "^0.19.3",
+    "@dfinity/principal": "^0.19.3",
+    "zustand": "^4.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.23",
+    "typings-tester": "^0.3.2",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "start": "dts watch",
+    "build": "dts build --format cjs,esm,umd --tsconfig ./tsconfig.build.json",
+    "test": "dts test",
+    "clean": "rimraf dist"
+  },
+  "engines": {
+    "node": ">=10"
+  }
+}

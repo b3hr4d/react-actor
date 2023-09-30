@@ -1,15 +1,32 @@
 {
-  "packages": [
-    "packages/*"
-  ],
   "version": "independent",
-  "npmClient": "npm",
-  "useWorkspaces": true,
+  "npmClient": "yarn",
   "command": {
-    "test": {
-      "parallel": true,
-      "npmClient": "npm",
-      "script": "test"
+    "version": {
+      "message": "chore(release): released new version [skip ci]",
+      "ignoreChanges": [
+        "**/CHANGELOG.md",
+        "**/examples/*",
+        "**/node_modules/**",
+        "**/package.json",
+        "**/*.md"
+      ]
+    },
+    "publish": {
+      "allowBranch": [
+        "main",
+        "master",
+        "next"
+      ],
+      "registry": "https://registry.npmjs.org/",
+      "ignoreChanges": [
+        "**/CHANGELOG.md",
+        "**/examples/*",
+        "**/node_modules/**",
+        "**/package.json",
+        "**/*.md"
+      ]
     }
-  }
+  },
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }
