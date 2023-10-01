@@ -3,7 +3,11 @@ import { createActor } from "./candid"
 
 describe("My IC Store and Actions", () => {
   const [, myActions] = createICStoreAndActions(() =>
-    createActor("mnrs5-4qaaa-aaaap-abc5a-cai")
+    createActor("bd3sg-teaaa-aaaaa-qaaba-cai", {
+      agentOptions: {
+        host: "http://localhost:8080",
+      },
+    })
   )
 
   afterAll(() => {
@@ -22,10 +26,22 @@ describe("My IC Store and Actions", () => {
   it("should return anonymous user data", async () => {
     myActions.startActivation()
 
+    const mockData = Uint8Array.from(Array(48).fill(0))
+    const publicKey = Uint8Array.from(Array(48).fill(0))
+
+    const index = await myActions.callActorMethod(
+      "save_encrypted_text",
+      mockData,
+      [publicKey]
+    )
+
+    expect(index).toBeDefined()
+
     const userData = await myActions.callActorMethod(
       "anonymous_user",
-      Uint8Array.from([])
+      publicKey
     )
+
     expect(userData).toBeDefined()
   })
 

@@ -29,8 +29,6 @@ function createICStoreAndActions<A extends ActorSubclass<any>>(
     try {
       actor = actorInitializer()
 
-      console.log(actor)
-
       update({ initialized: true, initializing: false })
     } catch (error) {
       console.error("Error in initializeActor:", error)
