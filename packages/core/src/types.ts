@@ -1,4 +1,4 @@
-import { Actor, ActorMethod, ActorSubclass } from "@dfinity/agent"
+import { ActorMethod, ActorSubclass } from "@dfinity/agent"
 
 export type ExtractActorMethodArgs<T> = T extends ActorMethod<infer A>
   ? A
@@ -10,8 +10,6 @@ export type ExtractActorMethodReturnType<T> = T extends ActorMethod<
 >
   ? R
   : never
-
-export type ExtractActorServiceType<T> = T extends Actor & infer S ? S : never
 
 export interface ICState {
   data: any | null
@@ -34,7 +32,7 @@ export type ICStore<A> = {
   error: Error | null
 }
 
-export type CallActorMethodType<A extends ActorSubclass<unknown>> = <
+export type CallActorMethodType<A = Record<string, ActorMethod>> = <
   M extends keyof A
 >(
   method: M,
@@ -44,7 +42,7 @@ export type CallActorMethodType<A extends ActorSubclass<unknown>> = <
 export type UseSelectorType = (fn: (state: ICState) => any) => any
 
 // Adapt the ICActions to use Dfinity's ActorMethod
-export interface ICActions<A extends ActorSubclass<unknown>> {
+export interface ICActions<A extends ActorSubclass<any>> {
   startActivation: () => () => void
   resetState: () => void
   callActorMethod: CallActorMethodType<A>

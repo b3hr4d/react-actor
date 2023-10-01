@@ -2,17 +2,16 @@ import { ActorSubclass } from "@dfinity/agent" // Import from Dfinity
 import { create, useStore } from "zustand"
 import {
   CallActorMethodType,
-  ExtractActorServiceType,
+  ExtractActorMethodArgs,
+  ExtractActorMethodReturnType,
   ICState,
   UseSelectorType,
 } from "./types"
 
-const createICStoreAndActions = (actorInitializer: ActorSubclass<any>) => {
-  type ServiceType = ExtractActorServiceType<
-    ReturnType<typeof actorInitializer>
-  >
-
-  let actor: ServiceType | null = null
+function createICStoreAndActions<A extends ActorSubclass<any>>(
+  actorInitializer: () => A
+) {
+  let actor: A | null = null
 
   const DEFAULT_STATE: ICState = {
     data: null,
@@ -29,6 +28,8 @@ const createICStoreAndActions = (actorInitializer: ActorSubclass<any>) => {
 
     try {
       actor = actorInitializer()
+
+      console.log(actor)
 
       update({ initialized: true, initializing: false })
     } catch (error) {
@@ -54,10 +55,7 @@ const createICStoreAndActions = (actorInitializer: ActorSubclass<any>) => {
     }))
   }
 
-  const callActorMethod: CallActorMethodType<ServiceType> = async (
-    method,
-    ...args
-  ) => {
+  const callActorMethod: CallActorMethodType<A> = async (method, ...args) => {
     if (!actor) {
       throw new Error("Actor not initialized")
     }
@@ -65,12 +63,20 @@ const createICStoreAndActions = (actorInitializer: ActorSubclass<any>) => {
     update({ loading: true })
 
     try {
-      const result = await actor[method](...args)
+      if (!actor[method] || typeof actor[method] !== "function") {
+        throw new Error(`Method ${String(method)} not found on actor`)
+      }
+
+      const actorMethod = actor[method] as (
+        ...args: ExtractActorMethodArgs<A[typeof method]>
+      ) => Promise<ExtractActorMethodReturnType<A[typeof method]>>
+
+      const result = await actorMethod(...args)
       update({ data: result, loading: false })
       return result
     } catch (error) {
       update({ error, loading: false })
-      return error
+      throw error
     }
   }
 

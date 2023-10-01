@@ -24,21 +24,23 @@
   },
   "homepage": "https://github.com/b3hr4d/react-actor#readme",
   "peerDependencies": {
-    "zustand": ">= 4",
     "@dfinity/agent": ">= 0.19",
     "@dfinity/candid": ">= 0.19",
-    "@dfinity/principal": ">= 0.19"
+    "@dfinity/principal": ">= 0.19",
+    "@dfinity/auth-client": ">= 0.19",
+    "zustand": ">= 4"
   },
   "dependencies": {
     "@dfinity/agent": "^0.19.3",
     "@dfinity/candid": "^0.19.3",
     "@dfinity/principal": "^0.19.3",
+    "@dfinity/auth-client": "^0.19.3",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.23",
-    "typings-tester": "^0.3.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "typings-tester": "^0.3.2"
   },
   "scripts": {
     "start": "dts watch",
