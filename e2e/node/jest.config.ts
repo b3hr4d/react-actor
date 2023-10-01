@@ -1,20 +1,17 @@
-import type { Config } from '@jest/types';
+import type { Config } from "@jest/types"
 const config: Config.InitialOptions = {
   verbose: true,
-  testEnvironment: 'jsdom',
-  testPathIgnorePatterns: ['/node_modules/', '/lib/', '/dist/', '/docs/'],
-  testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
-  roots: [`<rootDir>/e2e/node`],
+  testEnvironment: "jsdom",
+  testPathIgnorePatterns: ["/node_modules/", "/lib/", "/dist/", "/docs/"],
+  testMatch: ["**/?(*.)+(spec|test).[jt]s?(x)"],
   bail: false,
-  moduleDirectories: ['node_modules'],
-  modulePaths: [`<rootDir>/e2e/node/`],
-  setupFiles: [`<rootDir>/e2e/node/test-setup.ts`],
+  moduleDirectories: ["node_modules"],
+  setupFiles: [`<rootDir>/test-setup.ts`],
   transform: {
-    '^.+\\.ts$': 'ts-jest',
+    "^.+\\.ts$": "ts-jest",
   },
-  collectCoverageFrom: ['**/*.{ts,tsx}'],
-  displayName: 'e2e-node',
-  rootDir: '../..',
-};
+  collectCoverageFrom: ["**/*.{ts,tsx}"],
+  displayName: "e2e-node",
+}
 
-export default config;
+export default config

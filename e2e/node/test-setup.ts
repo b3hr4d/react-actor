@@ -16,10 +16,9 @@ global.TextEncoder = TextEncoder
 
 // global.TextDecoder = TextDecoder; // eslint-disable-line
 // (global.fetch as any) = fetch;
-import * as crypto from "crypto"
 import fetch from "isomorphic-fetch"
 global.fetch = fetch
 
-;(global as any).crypto = {
-  subtle: (crypto.webcrypto as any).subtle,
-}
+// ;(global as any).crypto = {
+//   subtle: (crypto.webcrypto as any).subtle,
+// }
