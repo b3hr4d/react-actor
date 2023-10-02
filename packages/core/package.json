@@ -40,6 +40,7 @@
   "devDependencies": {
     "@dfinity/identity": "^0.19.3",
     "@types/react": "^18.2.23",
+    "jest-fetch-mock": "^3.0.3",
     "typescript": "^5.2.2",
     "typings-tester": "^0.3.2"
   },

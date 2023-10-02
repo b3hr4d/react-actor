@@ -1,0 +1,86 @@
+Arguments: 
+  /Users/B3HR4D/.nvm/versions/node/v20.0.0/bin/node /opt/homebrew/bin/yarn test actor.test.ts
+
+PATH: 
+  /Users/B3HR4D/.bun/bin:/Users/B3HR4D/.wasmtime/bin:/opt/homebrew/opt/openssl@3/bin:/Users/B3HR4D/.nvm/versions/node/v20.0.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/usr/local/go/bin:/Users/B3HR4D/.bun/bin:/Users/B3HR4D/.wasmtime/bin:/opt/homebrew/opt/openssl@3/bin:/Users/B3HR4D/.nvm/versions/node/v20.0.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/B3HR4D/.cargo/bin:/Users/B3HR4D/.mysh:/Users/B3HR4D/.yarn/bin:/Users/B3HR4D/.foundry/bin:/Users/B3HR4D/.dfx/bin:/Users/B3HR4D/.bitcoind/bin:/Users/B3HR4D/.cloud/bin:/Users/B3HR4D/.mysh:/Users/B3HR4D/.foundry/bin:/Users/B3HR4D/.dfx/bin:/Users/B3HR4D/.bitcoind/bin:/Users/B3HR4D/.cloud/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  20.0.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  SyntaxError: /Users/B3HR4D/Coding/B3Pay/react-actor/packages/core/package.json: Expected double-quoted property name in JSON at position 1386
+      at JSON.parse (<anonymous>)
+      at /opt/homebrew/lib/node_modules/yarn/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /opt/homebrew/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "@react-actor/core",
+    "version": "1.0.0",
+    "description": "A React library for interacting with Dfinity actors",
+    "main": "dist/index.js",
+    "module": "dist/index.esm.js",
+    "types": "dist/index.d.ts",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/b3hr4d/react-actor.git"
+    },
+    "keywords": [
+      "actor",
+      "react",
+      "candid",
+      "dfinity",
+      "web3",
+      "dapp"
+    ],
+    "author": "b3hr4d",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/b3hr4d/react-actor/issues"
+    },
+    "homepage": "https://github.com/b3hr4d/react-actor#readme",
+    "peerDependencies": {
+      "@dfinity/agent": ">= 0.19",
+      "@dfinity/auth-client": ">= 0.19",
+      "@dfinity/candid": ">= 0.19",
+      "@dfinity/principal": ">= 0.19",
+      "zustand": ">= 4"
+    },
+    "dependencies": {
+      "@dfinity/agent": "^0.19.3",
+      "@dfinity/auth-client": "^0.19.3",
+      "@dfinity/candid": "^0.19.3",
+      "@dfinity/principal": "^0.19.3",
+      "zustand": "^4.4.1"
+    },
+    "devDependencies": {
+      "@dfinity/identity": "^0.19.3",
+      "@types/react": "^18.2.23",
+      "jest-fetch-mock": "^3.0.3",
+      "typescript": "^5.2.2",
+      "typings-tester": "^0.3.2"
+    },
+    "scripts": {
+      "start": "dts watch",
+      "build": "dts build --format cjs,esm,umd --tsconfig ./tsconfig.build.json",
+      "test": "dts test",
+      "clean": "rimraf dist"
+    },
+    "engines": {
+      "node": ">=10"
+    },
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
