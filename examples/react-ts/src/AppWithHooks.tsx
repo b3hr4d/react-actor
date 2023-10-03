@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { startActivation, useSelector } from "./store"
+import { initialize, useSelector } from "./store"
 
 const Count = () => {
   const data = useSelector((state) => state.data)
@@ -35,7 +35,7 @@ const Count = () => {
         }}
       >
         <h1>Test Actor</h1>
-        <button onClick={startActivation}>Click</button>
+        <button onClick={initialize}>Click</button>
         {loadingState ? (
           <div className="loader" />
         ) : (

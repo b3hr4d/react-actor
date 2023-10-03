@@ -1,10 +1,8 @@
 import createICStoreAndActions from "react-actor"
 import { createActor } from "./candid"
 
-export const [
-  store,
-  { resetState, useSelector, startActivation, callActorMethod },
-] = createICStoreAndActions(() => createActor("bd3sg-teaaa-aaaaa-qaaba-cai"))
+export const [store, { resetState, useSelector, initialize, call }] =
+  createICStoreAndActions(() => createActor("bd3sg-teaaa-aaaaa-qaaba-cai"))
 
 export default store
 

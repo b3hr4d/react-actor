@@ -2,22 +2,22 @@ import createICStoreAndActions from "react-actor"
 import { createActor } from "./candid"
 
 const [myStore, myActions] = createICStoreAndActions(() =>
-  createActor("http://localhost:8000")
+  createActor("http://localhost:8080")
 )
 
 myStore.subscribe((state) => {
   console.log("state", state)
 })
 ;(async () => {
-  const cancelActivation = myActions.startActivation()
+  const cancelActivation = myActions.initialize()
 
-  const key = await myActions.callActorMethod("symmetric_key_verification_key")
+  const key = await myActions.call("symmetric_key_verification_key")
   console.log("key", key)
 
-  const userData = await myActions.callActorMethod("anonymous_user", [])
+  const userData = await myActions.call("anonymous_user", [])
   console.log("userData", userData)
 
-  const timers = await myActions.callActorMethod("timers")
+  const timers = await myActions.call("timers")
   console.log("timers", timers)
 
   cancelActivation()

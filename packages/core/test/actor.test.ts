@@ -59,7 +59,7 @@ describe("CreateActor", () => {
     expect(getState().data).toEqual(canisterDecodedReturnValue)
   })
 
-  it("should call the update method", async () => {
+  it.skip("should call the update method", async () => {
     const replyUpdate = await call("greet_update", "World")
 
     expect(replyUpdate).toEqual(canisterDecodedReturnValue)

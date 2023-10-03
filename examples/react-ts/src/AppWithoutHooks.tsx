@@ -1,11 +1,11 @@
 import * as React from "react"
 import "./index.css"
-import { RootState, startActivation } from "./store"
+import { RootState, initialize } from "./store"
 import "./switch.css"
 
 class App extends React.PureComponent<Props> {
   componentDidMount() {
-    startActivation()
+    initialize()
     // const { players } = this.props
     // players.getPlayers()
   }
