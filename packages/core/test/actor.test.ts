@@ -1,6 +1,5 @@
-import { Cbor, HttpAgent } from "@dfinity/agent"
+import { Cbor } from "@dfinity/agent"
 import { IDL } from "@dfinity/candid"
-import { Principal } from "@dfinity/principal"
 import fetchMock from "jest-fetch-mock"
 import createICStoreAndActions from "../src"
 import { createActor } from "./candid/hello"
@@ -12,12 +11,19 @@ const expectedReplyArg = IDL.encode([IDL.Text], [canisterDecodedReturnValue])
 
 fetchMock.mockResponse(async (req) => {
   console.log("mockResponse", req.url.split("/").findLast((_) => _) ?? "")
+
+  if (req.url.endsWith("/call")) {
+    return Promise.resolve({
+      status: 200,
+    })
+  }
+
   const responseObj = {
     status: "replied",
     reply: {
       arg: expectedReplyArg,
     },
-    rootKey: [
+    root_key: [
       48, 129, 130, 48, 29, 6, 13, 43, 6, 1, 4, 1, 130, 220, 124, 5, 3, 1, 2, 1,
       6, 12, 43, 6, 1, 4, 1, 130, 220, 124, 5, 3, 2, 1, 3, 97, 0, 152, 245, 4,
       39, 146, 174, 234, 225, 244, 127, 143, 22, 30, 244, 96, 2, 185, 106, 236,
@@ -29,44 +35,34 @@ fetchMock.mockResponse(async (req) => {
     ],
   }
 
-  if (req.url.endsWith("/call")) {
-    return Promise.resolve({
-      status: 202,
-      statusText: "accepted",
-    })
-  }
-
   return Promise.resolve({
     status: 200,
-    statusText: "ok",
     body: Cbor.encode(responseObj),
   })
 })
 
-describe("makeActor", () => {
-  const agent = new HttpAgent({
-    host: "http://f866-178-128-192-251.ngrok-free.app",
+describe("CreateActor", () => {
+  const [{ getState }, { initialize, call }] = createICStoreAndActions(() =>
+    createActor("bd3sg-teaaa-aaaaa-qaaba-cai")
+  )
+
+  it("should initialize the actor", () => {
+    initialize()
+
+    expect(getState().initialized).toEqual(true)
   })
 
-  it("should call the actor method", async () => {
-    const canisterId = Principal.fromText("bd3sg-teaaa-aaaaa-qaaba-cai")
-    agent.fetchRootKey()
-    const [{}, { startActivation, callActorMethod }] = createICStoreAndActions(
-      () =>
-        createActor(canisterId, {
-          agent,
-        })
-    )
-    // subscribe(console.log)
-
-    startActivation()
-
-    const reply = await callActorMethod("greet", "World")
+  it("should call the query method", async () => {
+    const reply = await call("greet", "World")
 
     expect(reply).toEqual(canisterDecodedReturnValue)
+    expect(getState().data).toEqual(canisterDecodedReturnValue)
+  })
 
-    const replyUpdate = await callActorMethod("greet_update", "World")
+  it("should call the update method", async () => {
+    const replyUpdate = await call("greet_update", "World")
 
     expect(replyUpdate).toEqual(canisterDecodedReturnValue)
+    expect(getState().data).toEqual(canisterDecodedReturnValue)
   })
 })

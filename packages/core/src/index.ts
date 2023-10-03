@@ -4,13 +4,15 @@ import {
   CallActorMethodType,
   ExtractActorMethodArgs,
   ExtractActorMethodReturnType,
+  ICActions,
   ICState,
+  ICStore,
   UseSelectorType,
 } from "./types"
 
 function createICStoreAndActions<A extends ActorSubclass<any>>(
   actorInitializer: () => A
-) {
+): [ICStore, ICActions<A>] {
   let actor: A | null = null
 
   const DEFAULT_STATE: ICState = {
@@ -23,7 +25,7 @@ function createICStoreAndActions<A extends ActorSubclass<any>>(
 
   const store = create(() => DEFAULT_STATE)
 
-  const startActivation = () => {
+  const initialize = () => {
     store.setState({ initializing: true })
 
     try {
@@ -53,7 +55,7 @@ function createICStoreAndActions<A extends ActorSubclass<any>>(
     }))
   }
 
-  const callActorMethod: CallActorMethodType<A> = async (method, ...args) => {
+  const call: CallActorMethodType<A> = async (method, ...args) => {
     if (!actor) {
       throw new Error("Actor not initialized")
     }
@@ -82,10 +84,7 @@ function createICStoreAndActions<A extends ActorSubclass<any>>(
     return useStore(store, fn)
   }
 
-  return [
-    store,
-    { startActivation, useSelector, resetState, callActorMethod },
-  ] as const
+  return [store, { initialize, useSelector, resetState, call }]
 }
 
 export default createICStoreAndActions

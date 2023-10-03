@@ -1,4 +1,5 @@
 import { ActorMethod, ActorSubclass } from "@dfinity/agent"
+import { StoreApi, UseBoundStore } from "zustand"
 
 export type ExtractActorMethodArgs<T> = T extends ActorMethod<infer A>
   ? A
@@ -25,13 +26,6 @@ export interface ICStateUpdate {
   error?: Error
 }
 
-export type ICStore<A> = {
-  actor: A | null
-  data: any | null
-  loading: boolean
-  error: Error | null
-}
-
 export type CallActorMethodType<A = Record<string, ActorMethod>> = <
   M extends keyof A
 >(
@@ -43,7 +37,9 @@ export type UseSelectorType = (fn: (state: ICState) => any) => any
 
 // Adapt the ICActions to use Dfinity's ActorMethod
 export interface ICActions<A extends ActorSubclass<any>> {
-  startActivation: () => () => void
-  resetState: () => void
-  callActorMethod: CallActorMethodType<A>
+  readonly initialize: () => () => void
+  readonly resetState: () => void
+  readonly useSelector: UseSelectorType
+  readonly call: CallActorMethodType<A>
 }
+export type ICStore = UseBoundStore<StoreApi<ICState>>
