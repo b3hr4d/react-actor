@@ -1,6 +1,6 @@
 {
   "name": "@re-actor/core",
-  "version": "0.0.0-alpha.3",
+  "version": "0.0.0-alpha.4",
   "description": "A React library for interacting with Dfinity actors",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -52,6 +52,5 @@
   },
   "engines": {
     "node": ">=10"
-  },
-  "gitHead": "4eefdaa418dd4dfcf7117db80630d0d2561c5c8a"
+  }
 }
