@@ -1,11 +1,10 @@
 {
   "name": "simple-example",
-  "version": "0.0.0-alpha.1",
   "private": true,
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "re-actor": "0.0.0-alpha.0"
+    "re-actor": "0.0.0-alpha.1"
   },
   "gitHead": "8f171f7402836d1813c40c0feedb6401eaba694f"
 }

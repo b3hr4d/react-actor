@@ -1,5 +1,5 @@
 import createICStoreAndActions from "../src"
-import { createActor } from "./candid"
+import { createActor } from "./candid/backend"
 
 describe("My IC Store and Actions", () => {
   const [, myActions] = createICStoreAndActions(() =>
@@ -15,40 +15,33 @@ describe("My IC Store and Actions", () => {
   })
 
   it("should return the symmetric key verification key", async () => {
-    myActions.startActivation()
+    myActions.initialize()
 
-    const key = await myActions.callActorMethod(
-      "symmetric_key_verification_key"
-    )
+    const key = await myActions.call("symmetric_key_verification_key")
     expect(key).toBeDefined()
   })
 
   it("should return anonymous user data", async () => {
-    myActions.startActivation()
+    myActions.initialize()
 
     const mockData = Uint8Array.from(Array(48).fill(0))
     const publicKey = Uint8Array.from(Array(48).fill(0))
 
-    const index = await myActions.callActorMethod(
-      "save_encrypted_text",
-      mockData,
-      [publicKey]
-    )
+    const index = await myActions.call("save_encrypted_text", mockData, [
+      publicKey,
+    ])
 
     expect(index).toBeDefined()
 
-    const userData = await myActions.callActorMethod(
-      "anonymous_user",
-      publicKey
-    )
+    const userData = await myActions.call("anonymous_user", publicKey)
 
     expect(userData).toBeDefined()
   })
 
   it("should return timers", async () => {
-    myActions.startActivation()
+    myActions.initialize()
 
-    const timers = await myActions.callActorMethod("timers")
+    const timers = await myActions.call("timers")
     expect(timers).toBeDefined()
   })
 })
