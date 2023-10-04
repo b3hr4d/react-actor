@@ -1,7 +1,7 @@
 {
   "name": "re-actor",
   "version": "0.0.0-alpha.0",
-  "description": "A React library for working with Candid files",
+  "description": "A React library for working with Internet computer Actors",
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
@@ -16,8 +16,13 @@
     "nx-cloud": "^16.4.0",
     "typescript": "^5.2.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:b3hr4d/react-actor.git"
+  },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "private": true,
   "workspaces": [
