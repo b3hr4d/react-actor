@@ -1,13 +1,13 @@
 {
   "name": "@re-actor/core",
-  "version": "0.0.0-alpha.4",
+  "version": "0.0.0-alpha.5",
   "description": "A React library for interacting with Dfinity actors",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/b3hr4d/react-actor.git"
+    "url": "git@github.com:b3hr4d/react-actor.git"
   },
   "keywords": [
     "actor",
@@ -20,9 +20,9 @@
   "author": "b3hr4d",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/b3hr4d/react-actor/issues"
+    "url": "https://github.com/b3hr4d/re-actor/issues"
   },
-  "homepage": "https://github.com/b3hr4d/react-actor#readme",
+  "homepage": "https://github.com/b3hr4d/re-actor#readme",
   "peerDependencies": {
     "@dfinity/agent": ">= 0.19",
     "@dfinity/auth-client": ">= 0.19",
