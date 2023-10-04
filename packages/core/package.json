@@ -1,6 +1,6 @@
 {
   "name": "@re-actor/core",
-  "version": "0.0.0-alpha.5",
+  "version": "0.0.0-alpha.0",
   "description": "A React library for interacting with Dfinity actors",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -53,5 +53,8 @@
   "engines": {
     "node": ">=10"
   },
-  "gitHead": "c9e4f51f84fe0d14f7bee838c520b2f565c55227"
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }
