@@ -20,10 +20,6 @@
     "type": "git",
     "url": "git@github.com:b3hr4d/react-actor.git"
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
   "private": true,
   "workspaces": [
     "packages/*",
