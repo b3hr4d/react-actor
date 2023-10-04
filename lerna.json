@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.0",
   "npmClient": "yarn",
   "command": {
     "version": {
@@ -13,6 +13,7 @@
       ]
     },
     "publish": {
+      "npmClient": "npm",
       "allowBranch": [
         "main",
         "master",
